@@ -1,8 +1,8 @@
 # Deep Bite (2D shark game)
 
-A 2D side-view shark game that runs in any browser: phones, tablets, desktops.
-It is hosted on **Cloudflare Workers** (static assets + API) with a global leaderboard in **Cloudflare D1**.
-It can be installed to the home screen as a PWA.
+A simple 2D shark game that runs in any browser: phones, tablets, desktops.
+It's plain HTML, CSS and JavaScript. There's no server code, no database and no build step.
+It is hosted as static files on **Cloudflare**, and your best score is saved in your own browser.
 
 **Gameplay:** swim, eat fish smaller than you, grow, and unlock bigger prey. Keep the
 hunger bar up. Avoid jellyfish, sea mines and fishing hooks. Quick meals build a combo
@@ -26,14 +26,10 @@ public/                 static files served by Workers Assets (no build step)
   js/art.js             render layer: sprites w/ placeholder fallbacks  ← design hand-off
   js/audio.js           sound layer: audio files w/ synthesized fallbacks
   js/input.js           keyboard / mouse / touch
-  js/ui.js, js/api.js   HUD, overlays, leaderboard client
+  js/ui.js              HUD, overlay screens, best score (localStorage)
   assets/sprites/       designer sprites + manifest.json
   assets/audio/         sound files + manifest.json
   sw.js, manifest.webmanifest, icon*.{svg,png}   PWA
-src/worker.js           Worker: /api/scores (GET top N, POST submit), /api/health
-src/validate.js         submission validation (unit tested)
-migrations/             D1 schema
-test/                   node:test unit tests
 ```
 
 ## Design hand-off
@@ -66,62 +62,45 @@ All visuals are isolated so design work drops in without touching game logic.
 **UI:** `index.html` + `style.css` are functional placeholders. Restyle freely, but keep
 these element ids (used by `js/ui.js`): `hud score combo level bar-health bar-hunger
 bar-stamina pause-btn boost-btn mute-btn screen-menu screen-pause screen-over
-screen-board menu-best over-score over-best over-stats submit-form name-input
-submit-msg over-leaderboard board-list`. Buttons work through `data-action`
-(`play pause resume menu leaderboard mute`). Bars expose `--value` (0–1) and get a `.low` class below 25%.
+menu-best over-score over-best over-stats`. Buttons work through `data-action`
+(`play pause resume menu mute`). Bars expose `--value` (0–1) and get a `.low` class below 25%.
 
-## Local development
+## Run it locally
 
 ```bash
 npm install
 ```
 
 ```bash
-npm run db:migrate:local
-```
-
-```bash
 npm run dev
 ```
 
-Then open http://localhost:8787. Add `?debug` to expose `window.__deepbite` for testing.
+Then open http://localhost:8787. Any static file server pointed at `public/` also works.
+Opening `index.html` straight from disk won't work, because browsers block JS modules on `file://`.
+Add `?debug` to the URL to expose `window.__deepbite` for testing.
+
+## Put it live on Cloudflare
+
+1. Create a free account at dash.cloudflare.com.
+2. Run these on your computer, inside this folder:
 
 ```bash
-npm test
+npm install
 ```
-
-## Deploy to Cloudflare
-
-One-time setup:
 
 ```bash
 npx wrangler login
 ```
 
 ```bash
-npx wrangler d1 create sharkgame
-```
-
-Copy the printed `database_id` into `wrangler.jsonc`, then:
-
-```bash
-npm run db:migrate:remote
-```
-
-```bash
 npm run deploy
 ```
 
-Wrangler prints the live `*.workers.dev` URL. You can add a custom domain in the Cloudflare dashboard.
+Wrangler prints your live link (`https://sharkgame.<you>.workers.dev`). Run `npm run deploy` again after any change.
 
-**CI deploys:** `.github/workflows/deploy.yml` tests, migrates and deploys on every push to
-`main`. Add the repo secrets `CLOUDFLARE_API_TOKEN` (a token with *Workers Scripts: Edit* and *D1: Edit*)
-and `CLOUDFLARE_ACCOUNT_ID`.
+**No-terminal alternative:** in the Cloudflare dashboard go to **Workers & Pages → Create → Import a repository**,
+pick this GitHub repo, set the deploy command to `npx wrangler deploy`, and save. Cloudflare redeploys on every push.
 
-## Leaderboard API
-
-- `GET /api/scores?limit=20` returns `{ scores: [{ name, score, level, duration, created_at }] }`
-- `POST /api/scores` with `{ name, score, level, duration, clientId }` returns `{ ok, rank }`
-
-The server checks names, numeric ranges and a points-per-second ceiling, and rate-limits each client to 6 submissions a minute.
-Scores come from the browser, so they can't be fully trusted. For stronger anti-cheat, add server-issued game sessions or Turnstile.
+**Automatic deploys from GitHub Actions (optional):** `.github/workflows/deploy.yml` deploys on every push
+to `main` once the repo secrets `CLOUDFLARE_API_TOKEN` (an "Edit Cloudflare Workers" token) and
+`CLOUDFLARE_ACCOUNT_ID` are set.

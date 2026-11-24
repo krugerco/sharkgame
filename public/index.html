@@ -38,7 +38,6 @@
     <h1>Deep Bite</h1>
     <p class="tagline">Eat smaller fish. Grow. Survive the deep.</p>
     <button class="btn primary" data-action="play">Play</button>
-    <button class="btn" data-action="leaderboard">Leaderboard</button>
     <button class="btn" id="mute-btn" data-action="mute" aria-pressed="false">Sound: on</button>
     <p class="best">Best: <span id="menu-best">0</span></p>
     <div class="howto">
@@ -59,20 +58,8 @@
     <div id="over-score" class="big-score">0</div>
     <div id="over-best" class="muted"></div>
     <div id="over-stats" class="muted"></div>
-    <form id="submit-form" autocomplete="off">
-      <input id="name-input" maxlength="16" placeholder="Your name" aria-label="Your name" required>
-      <button class="btn" type="submit">Submit score</button>
-    </form>
-    <div id="submit-msg" class="muted" aria-live="polite"></div>
-    <ol id="over-leaderboard" class="leaderboard"></ol>
     <button class="btn primary" data-action="play">Play again</button>
     <button class="btn" data-action="menu">Menu</button>
-  </section>
-
-  <section id="screen-board" class="screen" hidden>
-    <h2>Leaderboard</h2>
-    <ol id="board-list" class="leaderboard"></ol>
-    <button class="btn" data-action="menu">Back</button>
   </section>
 
   <script type="module" src="/js/main.js"></script>

@@ -1,14 +1,10 @@
 {
   "name": "sharkgame",
   "private": true,
-  "version": "0.1.0",
-  "type": "module",
+  "version": "0.2.0",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "db:migrate:local": "wrangler d1 migrations apply sharkgame --local",
-    "db:migrate:remote": "wrangler d1 migrations apply sharkgame --remote",
-    "test": "node --test"
+    "deploy": "wrangler deploy"
   },
   "devDependencies": {
     "wrangler": "4.167.0"

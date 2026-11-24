@@ -89,15 +89,3 @@ canvas { display: block; touch-action: none; }
 .btn.primary { background: var(--accent); border-color: transparent; color: #022; }
 .btn:disabled { opacity: 0.5; }
 .btn:focus-visible, .icon-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-
-#submit-form { display: flex; gap: 8px; }
-#submit-form input {
-  flex: 1; min-width: 0; font: inherit; font-size: 16px; padding: 12px; border-radius: var(--radius);
-  border: 1px solid #ffffff30; background: #0006; color: var(--text); -webkit-user-select: text; user-select: text;
-}
-
-.leaderboard { margin: 0; padding: 0 0 0 28px; text-align: left; font-variant-numeric: tabular-nums; }
-.leaderboard li { padding: 4px 0; border-bottom: 1px solid #ffffff12; }
-.leaderboard li.muted { list-style: none; margin-left: -28px; text-align: center; border: 0; }
-.leaderboard .name { display: inline-block; max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
-.leaderboard .pts { float: right; font-weight: 700; }

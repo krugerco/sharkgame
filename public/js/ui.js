@@ -1,11 +1,16 @@
-// DOM layer: HUD, overlays, leaderboard. Element ids are the contract with
-// index.html — see README "Design hand-off" for the full list.
-
-import { fetchScores, submitScore } from './api.js';
+// DOM layer: HUD and overlay screens. Element ids are the contract with
+// index.html; see README "Design hand-off" for the full list.
+// Best score is saved in the browser (localStorage); no server involved.
 
 const $ = (id) => document.getElementById(id);
 const BEST_KEY = 'deepbite.best';
-const NAME_KEY = 'deepbite.name';
+
+function loadBest() {
+  try { return Number(localStorage.getItem(BEST_KEY) || 0); } catch { return 0; }
+}
+function saveBest(v) {
+  try { localStorage.setItem(BEST_KEY, String(v)); } catch { /* private mode: ignore */ }
+}
 
 export class UI {
   constructor() {
@@ -13,20 +18,17 @@ export class UI {
       hud: $('hud'), score: $('score'), combo: $('combo'), level: $('level'),
       health: $('bar-health'), hunger: $('bar-hunger'), stamina: $('bar-stamina'),
       boostBtn: $('boost-btn'), pauseBtn: $('pause-btn'), muteBtn: $('mute-btn'),
-      menu: $('screen-menu'), pause: $('screen-pause'), over: $('screen-over'), board: $('screen-board'),
+      menu: $('screen-menu'), pause: $('screen-pause'), over: $('screen-over'),
       best: $('menu-best'),
       overScore: $('over-score'), overBest: $('over-best'), overStats: $('over-stats'),
-      form: $('submit-form'), nameInput: $('name-input'), submitMsg: $('submit-msg'),
-      overList: $('over-leaderboard'), boardList: $('board-list'),
     };
-    this.best = Number(localStorage.getItem(BEST_KEY) || 0);
-    this.el.nameInput.value = localStorage.getItem(NAME_KEY) || '';
-    this.el.best.textContent = this.best;
+    this.best = loadBest();
+    this.el.best.textContent = this.best.toLocaleString();
     this._last = {};
   }
 
   show(screen) {
-    for (const s of ['menu', 'pause', 'over', 'board']) this.el[s].hidden = s !== screen;
+    for (const s of ['menu', 'pause', 'over']) this.el[s].hidden = s !== screen;
     const playing = screen === null || screen === 'pause';
     this.el.hud.hidden = !playing;
     this.el.boostBtn.hidden = !(screen === null && this.touch);
@@ -63,56 +65,10 @@ export class UI {
 
   showGameOver(summary) {
     const isBest = summary.score > this.best;
-    if (isBest) { this.best = summary.score; localStorage.setItem(BEST_KEY, String(this.best)); this.el.best.textContent = this.best; }
+    if (isBest) { this.best = summary.score; saveBest(this.best); this.el.best.textContent = this.best.toLocaleString(); }
     this.el.overScore.textContent = summary.score.toLocaleString();
     this.el.overBest.textContent = isBest ? 'New best!' : `Best: ${this.best.toLocaleString()}`;
     this.el.overStats.textContent = `Level ${summary.level} · ${summary.eaten} fish · ${summary.duration}s`;
-    this.el.submitMsg.textContent = '';
-    this.el.form.hidden = summary.score <= 0;
-    this.el.form.querySelector('button').disabled = false;
-    this._summary = summary;
     this.show('over');
-    this.loadLeaderboard(this.el.overList, 5);
-  }
-
-  bindSubmit() {
-    this.el.form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = this.el.nameInput.value.trim();
-      if (!name || !this._summary) return;
-      localStorage.setItem(NAME_KEY, name);
-      const btn = this.el.form.querySelector('button');
-      btn.disabled = true;
-      this.el.submitMsg.textContent = 'Submitting…';
-      try {
-        const { rank } = await submitScore({ name, ...this._summary });
-        this.el.submitMsg.textContent = rank ? `You placed #${rank}!` : 'Submitted!';
-        this.el.form.hidden = true;
-        this.loadLeaderboard(this.el.overList, 5);
-      } catch (err) {
-        this.el.submitMsg.textContent = err.message;
-        btn.disabled = false;
-      }
-    });
-  }
-
-  async loadLeaderboard(listEl, limit = 20) {
-    listEl.innerHTML = '<li class="muted">Loading…</li>';
-    try {
-      const scores = await fetchScores(limit);
-      listEl.innerHTML = '';
-      if (!scores.length) { listEl.innerHTML = '<li class="muted">No scores yet. Be the first!</li>'; return; }
-      for (const s of scores) {
-        const li = document.createElement('li');
-        const name = document.createElement('span'); name.className = 'name'; name.textContent = s.name;
-        const score = document.createElement('span'); score.className = 'pts'; score.textContent = s.score.toLocaleString();
-        li.append(name, score);
-        listEl.append(li);
-      }
-    } catch (err) {
-      listEl.innerHTML = '';
-      const li = document.createElement('li'); li.className = 'muted'; li.textContent = err.message;
-      listEl.append(li);
-    }
   }
 }

@@ -70,7 +70,6 @@ function toMenu() { mode = 'menu'; game.demo = true; game.reset(); ui.show('menu
 
 input.onPause = () => (mode === 'playing' ? pause() : resume());
 input.bindBoostButton(ui.el.boostBtn);
-ui.bindSubmit();
 document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
 
 document.addEventListener('click', (e) => {
@@ -82,7 +81,6 @@ document.addEventListener('click', (e) => {
     case 'pause': pause(); break;
     case 'resume': resume(); break;
     case 'menu': toMenu(); break;
-    case 'leaderboard': ui.show('board'); ui.loadLeaderboard(ui.el.boardList, 20); break;
     case 'mute': audio.setMuted(!audio.muted); ui.setMuted(audio.muted); break;
   }
 });

@@ -9,7 +9,7 @@ export class Audio {
     this.master = null;
     this.buffers = {};
     this.music = null;
-    this.muted = localStorage.getItem('deepbite.muted') === '1';
+    try { this.muted = localStorage.getItem('deepbite.muted') === '1'; } catch { this.muted = false; }
   }
 
   // Must be called from a user gesture (browser autoplay rules).
@@ -39,7 +39,7 @@ export class Audio {
 
   setMuted(m) {
     this.muted = m;
-    localStorage.setItem('deepbite.muted', m ? '1' : '0');
+    try { localStorage.setItem('deepbite.muted', m ? '1' : '0'); } catch { /* ignore */ }
     if (this.master) this.master.gain.value = m ? 0 : 0.6;
   }
 
