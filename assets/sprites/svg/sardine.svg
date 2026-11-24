@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 64" width="128" height="64">
+  <defs>
+    <linearGradient id="sa-b" x1="0" y1="17" x2="0" y2="45" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1f4a5c"/>
+      <stop offset="0.32" stop-color="#3f7b8c"/>
+      <stop offset="0.45" stop-color="#b9d0d6"/>
+      <stop offset="0.7" stop-color="#e6eef0"/>
+      <stop offset="1" stop-color="#c6d2d6"/>
+    </linearGradient>
+    <linearGradient id="sa-iri" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9ef0e0" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#c8b6ff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#9ef0e0" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="sa-f" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7f9aa3" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#a9bcc2" stop-opacity="0.85"/>
+    </linearGradient>
+    <clipPath id="sa-c"><path d="M 120 32 C 112 22, 92 17, 66 17 C 46 17, 30 22, 18 30
+    L 18 34 C 30 41, 46 45, 66 45 C 92 45, 112 41, 120 32 Z"/></clipPath>
+    
+  <filter id="sa-t" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="2.2" numOctaves="3" seed="7" result="n"/>
+    <feColorMatrix in="n" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.16 0" result="a"/>
+    <feComposite in="a" in2="SourceGraphic" operator="in"/>
+  </filter>
+  </defs>
+  <!-- forked tail -->
+  <path d="M 22 31 C 16 24, 10 16, 3 10 C 7 20, 9 27, 10 32 C 9 37, 7 44, 3 54 C 10 48, 16 40, 22 33 Z" fill="url(#sa-f)"/>
+  <path d="M 72 18 C 68 12, 62 9, 56 8 C 58 12, 58 15, 58 18 Z" fill="url(#sa-f)"/>
+  <path d="M 50 44 C 47 48, 43 50, 39 51 C 41 48, 42 46, 42 44 Z" fill="url(#sa-f)"/>
+  <path d="M 120 32 C 112 22, 92 17, 66 17 C 46 17, 30 22, 18 30
+    L 18 34 C 30 41, 46 45, 66 45 C 92 45, 112 41, 120 32 Z" fill="url(#sa-b)"/>
+  <g clip-path="url(#sa-c)">
+    <rect x="18" y="26" width="102" height="9" fill="url(#sa-iri)"/>
+    <!-- row of dark spots typical of sardines -->
+    <g fill="#183a48" opacity="0.6">
+      <circle cx="88" cy="26" r="1.5"/><circle cx="80" cy="26.5" r="1.3"/>
+      <circle cx="72" cy="27" r="1.2"/><circle cx="64" cy="27.3" r="1.1"/>
+    </g>
+    <rect x="16" y="14" width="106" height="34" filter="url(#sa-t)"/>
+    <path d="M 120 32 C 112 22, 92 17, 66 17 C 46 17, 30 22, 18 30
+    L 18 34 C 30 41, 46 45, 66 45 C 92 45, 112 41, 120 32 Z" fill="none" stroke="#000" stroke-opacity="0.12" stroke-width="2"/>
+  </g>
+  <!-- operculum (gill cover) -->
+  <path d="M 100 21 C 96 27, 96 36, 100 42" stroke="#6b8a92" stroke-width="1.2" fill="none" opacity="0.8"/>
+  <path d="M 120 32 C 116 34, 112 35, 108 35" stroke="#47606a" stroke-width="0.9" fill="none"/>
+  <circle cx="110" cy="28" r="3.6" fill="#e9eef0"/>
+  <circle cx="110" cy="28" r="2.4" fill="#111"/>
+  <circle cx="110.8" cy="27.2" r="0.7" fill="#fff"/>
+  <path d="M 84 38 C 80 42, 74 44, 70 45 C 74 42, 77 40, 80 37 Z" fill="url(#sa-f)"/>
+</svg>
