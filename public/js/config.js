@@ -32,16 +32,16 @@ export const STATS = {
 };
 
 // r = collision/size radius (≈ half body length). depth = [min,max] fraction of world depth.
+// Visuals for each id are chosen in art.js (SPRITE_MAP). heal = HP restored when eaten.
 export const FISH_TYPES = [
-  { id: 'minnow',    r: 7,  speed: 95,  pts: 10,   school: [5, 9], depth: [0.0, 0.5] },
-  { id: 'sardine',   r: 10, speed: 115, pts: 20,   school: [4, 7], depth: [0.05, 0.6] },
-  { id: 'reef',      r: 13, speed: 85,  pts: 35,   school: [1, 3], depth: [0.3, 0.95] },
-  { id: 'mackerel',  r: 17, speed: 130, pts: 60,   school: [3, 5], depth: [0.1, 0.6] },
-  { id: 'snapper',   r: 22, speed: 100, pts: 100,  school: [1, 2], depth: [0.4, 0.95] },
-  { id: 'tuna',      r: 30, speed: 150, pts: 180,  school: [2, 4], depth: [0.1, 0.7] },
-  { id: 'grouper',   r: 40, speed: 70,  pts: 300,  school: [1, 1], depth: [0.6, 0.97] },
-  { id: 'swordfish', r: 50, speed: 170, pts: 500,  school: [1, 1], depth: [0.2, 0.7] },
-  { id: 'squid',     r: 60, speed: 90,  pts: 1000, school: [1, 1], depth: [0.7, 0.97] },
+  { id: 'minnow',    r: 7,  speed: 95,  pts: 10,  school: [5, 9], depth: [0.0, 0.5] },
+  { id: 'sardine',   r: 10, speed: 115, pts: 20,  school: [4, 7], depth: [0.05, 0.6] },
+  { id: 'mackerel',  r: 15, speed: 130, pts: 45,  school: [3, 5], depth: [0.1, 0.7] },
+  { id: 'tuna',      r: 24, speed: 150, pts: 120, school: [2, 4], depth: [0.1, 0.7] },
+  { id: 'turtle',    r: 30, speed: 60,  pts: 200, school: [1, 1], depth: [0.1, 0.6], heal: 20 },
+  { id: 'seal',      r: 38, speed: 140, pts: 350, school: [1, 2], depth: [0.0, 0.4] },
+  { id: 'bluefin',   r: 50, speed: 165, pts: 600, school: [1, 2], depth: [0.2, 0.8] },
+  { id: 'bigseal',   r: 62, speed: 120, pts: 1000, school: [1, 1], depth: [0.0, 0.5] },
 ];
 
 export const GOLDEN = { chance: 0.02, ptsMultiplier: 8, heal: 25 };

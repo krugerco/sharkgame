@@ -1,0 +1,5 @@
+# Source/docs files that live next to the game but shouldn't be published.
+assets/sprites/src
+assets/sprites/svg
+assets/sprites/README.md
+assets/sprites/preview.png

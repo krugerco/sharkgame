@@ -57,6 +57,16 @@ export class Game {
 
   _emit(type, data) { if (!this.demo) this.onEvent(type, data); }
 
+  // Does a circle at (x,y) with radius rad touch the shark's body?
+  // The body is a capsule along the heading (matches the long, slim shark sprite).
+  touchesShark(x, y, rad) {
+    const s = this.shark;
+    const c = Math.cos(s.angle), sn = Math.sin(s.angle);
+    const dx = x - s.x, dy = y - s.y;
+    const u = clamp(dx * c + dy * sn, -1.6 * s.r, 1.6 * s.r);
+    return dist2(x, y, s.x + u * c, s.y + u * sn) < (rad + 0.4 * s.r) ** 2;
+  }
+
   isEdible(f) { return f.r <= this.shark.r * SHARK.edibleRatio; }
 
   // ── update ────────────────────────────────────────────────────────────────
@@ -125,7 +135,7 @@ export class Game {
     const k = damp(5, dt);
     this.cam.x = lerp(this.cam.x, s.x + s.vx * 0.25, k);
     const halfH = this.cam.h / 2;
-    const minY = -40 + halfH, maxY = WORLD.depth + 40 - halfH;
+    const minY = -40 + halfH, maxY = WORLD.depth + 110 - halfH;
     const ty = minY > maxY ? WORLD.depth / 2 : clamp(s.y, minY, maxY);
     this.cam.y = lerp(this.cam.y, ty, k);
     this.shake = Math.max(0, this.shake - dt * 30);
@@ -221,8 +231,8 @@ export class Game {
 
   _updateFish(dt) {
     const s = this.shark;
-    const mouthX = s.x + Math.cos(s.angle) * s.r * 1.7;
-    const mouthY = s.y + Math.sin(s.angle) * s.r * 1.7;
+    const mouthX = s.x + Math.cos(s.angle) * s.r * 1.55;
+    const mouthY = s.y + Math.sin(s.angle) * s.r * 1.55;
     const fleeR = 160 + s.r * 4;
     let nearPrey = false;
 
@@ -250,7 +260,7 @@ export class Game {
       if (edible) {
         if (md2 < (s.r * 3) ** 2) nearPrey = true;
         if (md2 < (f.r * 0.8 + s.r * 0.6) ** 2) { this._eat(f); this.fish.splice(i, 1); }
-      } else if (d2 < (f.r * 0.8 + s.r * 0.9) ** 2) {
+      } else if (this.touchesShark(f.x, f.y, f.r * 0.5)) {
         // too big: bounce off
         const d = Math.sqrt(d2) || 1;
         s.vx -= (dx / d) * 220; s.vy -= (dy / d) * 220;
@@ -275,7 +285,8 @@ export class Game {
     this.xp += f.type.pts * (f.golden ? 3 : 1);
     this.eaten++;
     s.hunger = clamp(s.hunger + 35 * Math.pow(f.r / s.r, 1.2) + 4, 0, STATS.hungerMax);
-    if (f.golden) s.health = clamp(s.health + GOLDEN.heal, 0, 100);
+    const heal = (f.golden ? GOLDEN.heal : 0) + (f.type.heal || 0);
+    if (heal) s.health = clamp(s.health + heal, 0, 100);
 
     s.targetR = Math.min(SHARK.maxRadius, SHARK.startRadius * Math.sqrt(1 + this.xp / SHARK.growthXp));
     const newLevel = levelForRadius(s.targetR);
@@ -296,8 +307,6 @@ export class Game {
 
   _updateHazards(dt) {
     const s = this.shark;
-    const hx = s.x + Math.cos(s.angle) * s.r * 1.3;
-    const hy = s.y + Math.sin(s.angle) * s.r * 1.3;
     for (const h of this.hazards) {
       if (h.kind === 'jelly') {
         h.x += h.vx * dt;
@@ -309,9 +318,7 @@ export class Game {
         h.y = h.baseY + Math.sin(this.time * 0.5 + h.phase) * 30;
       }
       if (s.invuln > 0 || h.dead || this.demo) continue;
-      const hitBody = dist2(h.x, h.y, s.x, s.y) < (h.r * 0.8 + s.r * 0.8) ** 2;
-      const hitHead = dist2(h.x, h.y, hx, hy) < (h.r * 0.8 + s.r * 0.6) ** 2;
-      if (hitBody || hitHead) this._hitHazard(h);
+      if (this.touchesShark(h.x, h.y, h.r * 0.75)) this._hitHazard(h);
     }
   }
 
