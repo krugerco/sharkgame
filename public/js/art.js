@@ -11,6 +11,7 @@
 //   fish.<id>  (ids from config.js FISH_TYPES), fish.golden
 //   hazard.jelly, hazard.mine, hazard.hook
 //   bg.far, bg.mid, bg.near         (tiling parallax layers, optional)
+//   bg.seabed                       (1920x300 bottom strip, drawn 1:1 at the seabed)
 //
 // Sprite entry:
 //   { "src": "shark.png",   // relative to /assets/sprites/
@@ -71,7 +72,15 @@ const PLACEHOLDER = {
   sand: '#5a5038', rock: '#0b2a40',
 };
 
+// bg.seabed is a 1920x300 strip drawn 1:1 in world units with its top at
+// depth - 180. Its sand line follows the same curve as art/sprites.js seabed().
+const SEABED_TILE = 1920, SEABED_TOP = 180;
+
 export function seabedY(x) {
+  if (sprites['bg.seabed']) {
+    const u = (((x % SEABED_TILE) + SEABED_TILE) % SEABED_TILE) / SEABED_TILE;
+    return WORLD.depth - 60 + Math.sin(u * Math.PI * 4) * 22 + Math.sin(u * Math.PI * 10) * 9;
+  }
   return WORLD.depth - 60 + Math.sin(x * 0.004) * 25 + Math.sin(x * 0.013) * 10;
 }
 
@@ -126,8 +135,19 @@ export function drawBackground(ctx, cam, t) {
     ctx.stroke();
   }
 
-  // seabed
-  if (top + h > WORLD.depth - 120) {
+  // seabed sprite strip (rocks, kelp, sand)
+  const bed = sprites['bg.seabed'];
+  if (bed && top + h > WORLD.depth - SEABED_TOP) {
+    const y = WORLD.depth - SEABED_TOP;
+    ctx.fillStyle = '#22322f';
+    ctx.fillRect(left, y + bed.img.height - 2, w, Math.max(0, top + h - (y + bed.img.height - 2)));
+    for (let x = Math.floor(left / SEABED_TILE) * SEABED_TILE; x < left + w; x += SEABED_TILE) {
+      ctx.drawImage(bed.img, x, y, SEABED_TILE, bed.img.height);
+    }
+  }
+
+  // placeholder seabed
+  if (!bed && top + h > WORLD.depth - 120) {
     ctx.fillStyle = PLACEHOLDER.sand;
     ctx.beginPath();
     ctx.moveTo(left - 20, WORLD.depth + 200);
@@ -235,6 +255,11 @@ export function drawFish(ctx, f, t, edible) {
   orient(ctx, f.x, f.y, f.angle);
   const key = f.golden ? 'fish.golden' : `fish.${f.type.id}`;
   if (!drawSprite(ctx, key, f.r, t + f.phase)) placeholderFish(ctx, f, t, edible);
+  else if (!edible) {
+    // gameplay cue kept with real art: a faint red rim on fish too big to eat
+    ctx.strokeStyle = 'rgba(255,90,90,0.35)'; ctx.lineWidth = Math.max(1.5, f.r * 0.06);
+    ctx.beginPath(); ctx.ellipse(0, 0, f.r * 1.25, f.r * 0.62, 0, 0, Math.PI * 2); ctx.stroke();
+  }
   ctx.restore();
 }
 

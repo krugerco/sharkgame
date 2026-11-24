@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 128" width="256" height="128">
+  <defs>
+    <linearGradient id="sn-b" x1="0" y1="20" x2="0" y2="106" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a32a31"/>
+      <stop offset="0.38" stop-color="#d9545b"/>
+      <stop offset="0.62" stop-color="#ef9a96"/>
+      <stop offset="1" stop-color="#f8d2cc"/>
+    </linearGradient>
+    <linearGradient id="sn-f" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0606a" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#b8323c" stop-opacity="1"/>
+    </linearGradient>
+    <radialGradient id="sn-sh" cx="0.62" cy="0.22" r="0.6">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sn-u" x1="0" y1="20" x2="0" y2="106" gradientUnits="userSpaceOnUse">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.22"/>
+    </linearGradient>
+    <clipPath id="sn-c"><path d="M 246 72 C 244 60, 232 44, 212 32 C 190 20, 160 18, 132 24 C 100 32, 72 48, 52 60 L 44 62 L 44 70 L 52 72 C 72 86, 100 100, 132 104 C 168 108, 206 102, 230 90 C 240 84, 246 78, 246 72 Z"/></clipPath>
+    
+  <filter id="sn-t" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="3" seed="7" result="n"/>
+    <feColorMatrix in="n" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.17 0" result="a"/>
+    <feComposite in="a" in2="SourceGraphic" operator="in"/>
+  </filter>
+    <pattern id="sn-sc" width="8" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-12)">
+      <path d="M 0 7 C 1 2, 7 2, 8 7" fill="none" stroke="#7a1a20" stroke-width="0.9" opacity="0.35"/></pattern>
+  </defs>
+  
+  <path d="M 50 65 C 40 55.2, 26 40.8, 10 30
+   C 18.799999999999997 48, 18 60.6, 18 66
+   C 18 71.4, 18.799999999999997 84, 10 102
+   C 26 91.2, 40 76.8, 50 67 Z" fill="url(#sn-f)"/>
+      <path d="M 200 28 L 194 8 L 186 22 L 178 5 L 170 20 L 162 5 L 155 21 L 146 7 L 139 23 L 128 12 L 120 28 C 140 22, 170 20, 200 28 Z" fill="url(#sn-f)"/>
+      <path d="M 124 27 C 110 16, 92 20, 76 40 C 88 38, 100 34, 114 32 Z" fill="url(#sn-f)"/>
+      <path d="M 124 101 C 112 118, 96 118, 84 102 C 96 98, 110 98, 124 101 Z" fill="url(#sn-f)"/>
+  <path d="M 246 72 C 244 60, 232 44, 212 32 C 190 20, 160 18, 132 24 C 100 32, 72 48, 52 60 L 44 62 L 44 70 L 52 72 C 72 86, 100 100, 132 104 C 168 108, 206 102, 230 90 C 240 84, 246 78, 246 72 Z" fill="url(#sn-b)"/>
+  <g clip-path="url(#sn-c)">
+    <rect width="256" height="128" fill="url(#sn-sc)"/>
+      <path d="M 212 38 C 170 32, 110 42, 50 64" stroke="#7a1a20" stroke-width="1.2" fill="none" opacity="0.45"/>
+    <path d="M 246 72 C 244 60, 232 44, 212 32 C 190 20, 160 18, 132 24 C 100 32, 72 48, 52 60 L 44 62 L 44 70 L 52 72 C 72 86, 100 100, 132 104 C 168 108, 206 102, 230 90 C 240 84, 246 78, 246 72 Z" fill="url(#sn-u)"/>
+    <path d="M 246 72 C 244 60, 232 44, 212 32 C 190 20, 160 18, 132 24 C 100 32, 72 48, 52 60 L 44 62 L 44 70 L 52 72 C 72 86, 100 100, 132 104 C 168 108, 206 102, 230 90 C 240 84, 246 78, 246 72 Z" fill="url(#sn-sh)"/>
+    <rect width="256" height="128" filter="url(#sn-t)"/>
+    <path d="M 246 72 C 244 60, 232 44, 212 32 C 190 20, 160 18, 132 24 C 100 32, 72 48, 52 60 L 44 62 L 44 70 L 52 72 C 72 86, 100 100, 132 104 C 168 108, 206 102, 230 90 C 240 84, 246 78, 246 72 Z" fill="none" stroke="#000" stroke-opacity="0.18" stroke-width="2.5"/>
+  </g>
+  <path d="M 196 36 C 184 56, 184 82, 194 98" stroke="#000" stroke-opacity="0.32" stroke-width="1.6" fill="none"/>
+  <path d="M 246 72 C 238 76, 228 78, 220 76" stroke="#000" stroke-opacity="0.55" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+  <circle cx="220" cy="52" r="7" fill="#c3222c"/>
+  <circle cx="220" cy="52" r="7" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="0.8"/>
+  <circle cx="220.56" cy="52" r="4.2" fill="#07090b"/>
+  <circle cx="222.1" cy="49.9" r="1.4000000000000001" fill="#fff" opacity="0.85"/>
+  <path d="M 190 74 C 176 78, 160 84, 146 92 C 162 94, 180 88, 194 80 Z" fill="#f2a7a2" opacity="0.9"/>
+      <path d="M 170 98 C 162 108, 154 114, 146 116 C 154 110, 160 104, 162 96 Z" fill="url(#sn-f)"/>
+</svg>

@@ -36,6 +36,13 @@ public/                 static files served by Workers Assets (no build step)
 
 All visuals are isolated so design work drops in without touching game logic.
 
+**Current art:** every creature, hazard and background layer has a realistic sprite, generated
+from `art/sprites.js`. Edit that file and run `node art/build.js` (needs Playwright) to rebuild
+the PNGs in `public/assets/sprites/` and the manifest. `art/preview.png` shows the full set, and
+`art/svg/` holds vector copies (plus a seal and a sea turtle the game doesn't use yet).
+`bg.seabed` is a 1920×300 strip drawn at the bottom of the world; `seabedY()` in `art.js`
+follows its sand line.
+
 **Sprites:** put images in `public/assets/sprites/` and register them in
 `public/assets/sprites/manifest.json`. Anything not registered keeps its placeholder.
 

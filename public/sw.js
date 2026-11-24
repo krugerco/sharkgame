@@ -1,6 +1,6 @@
 // Network-first service worker: always tries fresh files, falls back to cache
 // offline. Bump VERSION to drop old caches.
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CACHE = `deepbite-${VERSION}`;
 const CORE = ['/', '/index.html', '/style.css', '/js/main.js', '/js/game.js', '/js/art.js', '/js/config.js',
   '/js/input.js', '/js/audio.js', '/js/ui.js', '/js/util.js', '/manifest.webmanifest', '/icon.svg'];
