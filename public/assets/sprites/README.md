@@ -36,7 +36,7 @@ Suggested collision ellipses, in sprite pixels:
 All art is generated from `src/sprites.js`. After editing, rebuild:
 
 ```bash
-node assets/sprites/src/build.js
+node public/assets/sprites/src/build.js
 ```
 
 This needs Playwright (used to render the PNGs). `--svg-only` skips the PNG render.

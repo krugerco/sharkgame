@@ -1,59 +1,66 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// RENDER LAYER — the only file that decides how things look.
+// RENDER LAYER: the only file that decides how things look.
 //
 // Game logic (game.js) calls the draw* functions below with entity data in
-// WORLD units. Every draw call first looks for a sprite registered in
-//   /assets/sprites/manifest.json
-// and falls back to a simple placeholder shape if none is provided.
-//
-// Sprite manifest keys:
-//   shark, shark.bite               (bite = mouth-open variant, optional)
-//   fish.<id>  (ids from config.js FISH_TYPES), fish.golden
-//   hazard.jelly, hazard.mine, hazard.hook
-//   bg.far, bg.mid, bg.near         (tiling parallax layers, optional)
-//
-// Sprite entry:
-//   { "src": "shark.png",   // relative to /assets/sprites/
-//     "frames": 1,          // horizontal strip frame count
-//     "fps": 8,
-//     "size": 4.6,          // drawn width in multiples of the entity radius
-//     "facing": "right",    // which way the art faces
-//     "anchor": [0.5, 0.5], // pivot within the frame (0..1)
-//     "parallax": 0.3 }     // bg.* only: scroll factor
+// WORLD units. Art comes from the designer's sprite set in
+//   /assets/sprites/manifest.json   (built by assets/sprites/src/build.js)
+// SPRITE_MAP says which sprite each game entity uses and how big to draw it.
+// Anything without a sprite falls back to a simple placeholder shape.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { WORLD } from './config.js';
-import { hash } from './util.js';
+import { hash, clamp } from './util.js';
 
-const sprites = {};
+// size = drawn sprite width in multiples of the entity radius. Derived from the
+// hit boxes in assets/sprites/README.md so art lines up with collisions
+// (e.g. shark body ellipse is 400px of a 512px-wide sprite → 512 / (400/4) ≈ 5.1).
+// filter = optional canvas filter (used to tint reused art).
+const SPRITE_MAP = {
+  'shark':        { name: 'shark',      size: 5.1 },
+  'shark.bite':   { name: 'shark_bite', size: 5.1 },
+  'fish.minnow':  { name: 'sardine',    size: 2.56, filter: 'brightness(1.25) saturate(0.6)' },
+  'fish.sardine': { name: 'sardine',    size: 2.56 },
+  'fish.mackerel':{ name: 'sardine',    size: 2.56, filter: 'hue-rotate(-25deg) saturate(1.6)' },
+  'fish.tuna':    { name: 'tuna',       size: 2.56 },
+  'fish.turtle':  { name: 'turtle',     size: 2.84 },
+  'fish.seal':    { name: 'seal',       size: 2.44 },
+  'fish.bluefin': { name: 'tuna',       size: 2.56, filter: 'brightness(0.85) saturate(1.3)' },
+  'fish.bigseal': { name: 'seal',       size: 2.44, filter: 'brightness(0.8)' },
+  'fish.golden':  { name: 'sardine',    size: 2.56, filter: 'sepia(1) saturate(5) brightness(1.15)', glow: '#ffd23f' },
+  'hazard.jelly': { name: 'jellyfish',  size: 2.37 },
+};
+
+const sprites = {}; // designer sprite name -> { img, width, height, anchor }
 
 export async function loadArt() {
   try {
     const res = await fetch('/assets/sprites/manifest.json');
     if (!res.ok) return;
     const manifest = await res.json();
-    await Promise.all(Object.entries(manifest).map(([key, def]) => new Promise((resolve) => {
+    const hiDpi = (window.devicePixelRatio || 1) > 1.25;
+    await Promise.all(Object.entries(manifest.sprites || {}).map(([name, def]) => new Promise((resolve) => {
+      const file = (hiDpi && def.png2x) || def.png;
+      if (!file) return resolve();
       const img = new Image();
-      img.onload = () => { sprites[key] = { frames: 1, fps: 8, size: 3, facing: 'right', anchor: [0.5, 0.5], parallax: 0.5, ...def, img }; resolve(); };
-      img.onerror = () => { console.warn('sprite failed', key); resolve(); };
-      img.src = `/assets/sprites/${def.src}`;
+      img.onload = () => { sprites[name] = { img, width: def.width, height: def.height, anchor: def.anchor || [0.5, 0.5] }; resolve(); };
+      img.onerror = () => { console.warn('sprite failed to load:', name); resolve(); };
+      img.src = `/assets/sprites/${file.split("/").map(encodeURIComponent).join("/")}`;
     })));
-  } catch { /* no manifest — placeholders only */ }
+  } catch { /* no manifest: placeholders only */ }
 }
 
-// Draws a registered sprite centred on the current transform origin, facing +x.
-function drawSprite(ctx, key, r, t) {
-  const s = sprites[key];
+// Draws a mapped sprite on the current transform origin, facing +x.
+function drawSprite(ctx, key, r) {
+  const map = SPRITE_MAP[key];
+  const s = map && sprites[map.name];
   if (!s) return false;
-  const fw = s.img.width / s.frames;
-  const fh = s.img.height;
-  const w = r * s.size;
-  const h = w * (fh / fw);
-  const frame = s.frames > 1 ? Math.floor(t * s.fps) % s.frames : 0;
-  ctx.save();
-  if (s.facing === 'left') ctx.scale(-1, 1);
-  ctx.drawImage(s.img, frame * fw, 0, fw, fh, -w * s.anchor[0], -h * s.anchor[1], w, h);
-  ctx.restore();
+  const w = r * map.size;
+  const h = w * (s.height / s.width);
+  if (map.filter) ctx.filter = map.filter;
+  if (map.glow) { ctx.shadowColor = map.glow; ctx.shadowBlur = r * 1.2; }
+  ctx.drawImage(s.img, -w * s.anchor[0], -h * s.anchor[1], w, h);
+  ctx.filter = 'none';
+  ctx.shadowBlur = 0;
   return true;
 }
 
@@ -87,19 +94,20 @@ export function drawBackground(ctx, cam, t) {
   ctx.fillRect(left, Math.max(0, top), w, h);
   if (top < 0) { ctx.fillStyle = PLACEHOLDER.sky; ctx.fillRect(left, top, w, -top); }
 
-  // optional sprite parallax layers
-  for (const key of ['bg.far', 'bg.mid', 'bg.near']) {
-    const s = sprites[key];
-    if (!s) continue;
-    const scaleH = WORLD.depth / s.img.height;
-    const tw = s.img.width * scaleH;
-    const offset = cx * (1 - s.parallax);
-    const start = Math.floor((left - offset) / tw) * tw + offset;
-    for (let x = start; x < left + w; x += tw) ctx.drawImage(s.img, x, 0, tw, WORLD.depth);
+  // designer ocean backdrop: fixed to the screen like a skybox, darkened with depth
+  const ocean = sprites.background_ocean;
+  if (ocean) {
+    const vTop = Math.max(0, top);
+    const vh = top + h - vTop;
+    const scale = Math.max(w / ocean.width, vh / ocean.height);
+    const iw = ocean.width * scale, ih = ocean.height * scale;
+    ctx.drawImage(ocean.img, cx - iw / 2, vTop + (vh - ih) / 2, iw, ih);
+    ctx.fillStyle = `rgba(2,10,25,${clamp(cy / WORLD.depth, 0, 1) * 0.65})`;
+    ctx.fillRect(left, vTop, w, vh);
   }
 
   // placeholder: distant rocks (parallax 0.5)
-  if (!sprites['bg.far']) {
+  if (!ocean) {
     ctx.fillStyle = PLACEHOLDER.rock;
     const p = 0.5, step = 300;
     const off = cx * p;
@@ -127,7 +135,12 @@ export function drawBackground(ctx, cam, t) {
   }
 
   // seabed
-  if (top + h > WORLD.depth - 120) {
+  const bed = sprites.seabed;
+  if (bed && top + h > WORLD.depth - 400) {
+    const bh = 360, bw = bh * (bed.width / bed.height);
+    const y = WORLD.depth + 175 - bh; // sand line in the art ≈ seabed level
+    for (let x = Math.floor(left / bw) * bw; x < left + w; x += bw) ctx.drawImage(bed.img, x, y, bw + 1, bh);
+  } else if (top + h > WORLD.depth - 120) {
     ctx.fillStyle = PLACEHOLDER.sand;
     ctx.beginPath();
     ctx.moveTo(left - 20, WORLD.depth + 200);
@@ -171,9 +184,10 @@ export function drawShark(ctx, s, t) {
   ctx.save();
   orient(ctx, s.x, s.y, s.angle);
   if (s.invuln > 0 && Math.floor(t * 20) % 2 === 0) ctx.globalAlpha = 0.45;
+  ctx.rotate(Math.sin(s.tailPhase) * 0.03); // gentle swim wobble
 
-  const key = s.mouth > 0.5 && sprites['shark.bite'] ? 'shark.bite' : 'shark';
-  if (!drawSprite(ctx, key, s.r, t)) placeholderShark(ctx, s, t);
+  const key = s.mouth > 0.5 ? 'shark.bite' : 'shark';
+  if (!drawSprite(ctx, key, s.r)) placeholderShark(ctx, s, t);
   ctx.restore();
 }
 
@@ -226,15 +240,24 @@ function placeholderShark(ctx, s, t) {
 // ── Fish ─────────────────────────────────────────────────────────────────────
 
 const FISH_COLORS = {
-  minnow: '#c9e4f5', sardine: '#9fc7e0', reef: '#f39b3a', mackerel: '#4f8fae',
-  snapper: '#d9534f', tuna: '#2f4f75', grouper: '#7a6a4f', swordfish: '#36628a', squid: '#a65fb5',
+  minnow: '#c9e4f5', sardine: '#9fc7e0', mackerel: '#4f8fae', tuna: '#2f4f75',
+  turtle: '#6b7f3a', seal: '#8a8578', bluefin: '#24406a', bigseal: '#6e6a60',
 };
+
+// Fish the shark can't eat yet get a red outline (placeholder affordance; designer can restyle).
+function tooBigMarker(ctx, r) {
+  ctx.strokeStyle = 'rgba(255,80,80,0.6)'; ctx.lineWidth = Math.max(1.5, r * 0.06);
+  ctx.beginPath(); ctx.ellipse(0, 0, r * 1.15, r * 0.6, 0, 0, Math.PI * 2); ctx.stroke();
+}
 
 export function drawFish(ctx, f, t, edible) {
   ctx.save();
   orient(ctx, f.x, f.y, f.angle);
+  ctx.rotate(Math.sin(t * 8 + f.phase) * 0.06); // swim wobble
   const key = f.golden ? 'fish.golden' : `fish.${f.type.id}`;
-  if (!drawSprite(ctx, key, f.r, t + f.phase)) placeholderFish(ctx, f, t, edible);
+  if (drawSprite(ctx, key, f.r)) {
+    if (!edible) tooBigMarker(ctx, f.r);
+  } else placeholderFish(ctx, f, t, edible);
   ctx.restore();
 }
 
@@ -244,22 +267,9 @@ function placeholderFish(ctx, f, t, edible) {
   const color = f.golden ? '#ffd23f' : FISH_COLORS[f.type.id] || '#ccc';
   if (f.golden) { ctx.shadowColor = '#ffd23f'; ctx.shadowBlur = 20; }
   ctx.fillStyle = color;
-  if (f.type.id === 'squid') {
-    ctx.beginPath(); ctx.ellipse(0.3 * r, 0, r * 0.9, r * 0.35, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = color; ctx.lineWidth = r * 0.08;
-    for (let i = -2; i <= 2; i++) {
-      ctx.beginPath(); ctx.moveTo(-0.5 * r, i * 0.08 * r);
-      ctx.quadraticCurveTo(-1.1 * r, i * 0.15 * r + sway, -1.7 * r, i * 0.22 * r - sway); ctx.stroke();
-    }
-  } else {
-    ctx.beginPath(); ctx.ellipse(0, 0, r, r * 0.5, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(-0.8 * r, 0); ctx.lineTo(-1.5 * r, -0.5 * r + sway); ctx.lineTo(-1.5 * r, 0.5 * r + sway); ctx.fill();
-    if (f.type.id === 'swordfish') {
-      ctx.strokeStyle = color; ctx.lineWidth = r * 0.06;
-      ctx.beginPath(); ctx.moveTo(r, 0); ctx.lineTo(1.9 * r, -0.05 * r); ctx.stroke();
-    }
-  }
+  ctx.beginPath(); ctx.ellipse(0, 0, r, r * 0.5, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(-0.8 * r, 0); ctx.lineTo(-1.5 * r, -0.5 * r + sway); ctx.lineTo(-1.5 * r, 0.5 * r + sway); ctx.fill();
   ctx.shadowBlur = 0;
   ctx.fillStyle = '#111';
   ctx.beginPath(); ctx.arc(0.55 * r, -0.12 * r, Math.max(1.2, r * 0.09), 0, Math.PI * 2); ctx.fill();
@@ -276,7 +286,7 @@ export function drawHazard(ctx, h, t) {
   if (h.kind === 'mine') {
     // chain to seabed
     ctx.strokeStyle = 'rgba(40,40,40,0.8)'; ctx.lineWidth = 2; ctx.setLineDash([5, 4]);
-    ctx.beginPath(); ctx.moveTo(h.x, h.y); ctx.lineTo(h.anchorX, seabedY(h.anchorX)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(h.x, h.y); ctx.lineTo(h.anchorX, sprites.seabed ? WORLD.depth - 20 : seabedY(h.anchorX)); ctx.stroke();
     ctx.setLineDash([]);
   } else if (h.kind === 'hook') {
     ctx.strokeStyle = 'rgba(230,230,230,0.7)'; ctx.lineWidth = 1.5;
@@ -285,7 +295,9 @@ export function drawHazard(ctx, h, t) {
 
   ctx.save();
   ctx.translate(h.x, h.y);
-  if (!drawSprite(ctx, `hazard.${h.kind}`, h.r, t + h.phase)) {
+  const bob = h.kind === 'jelly' ? 1 + Math.sin(t * 3 + h.phase) * 0.05 : 1;
+  ctx.scale(1 / bob, bob);
+  if (!drawSprite(ctx, `hazard.${h.kind}`, h.r)) {
     if (h.kind === 'jelly') {
       const pulse = 1 + Math.sin(t * 3 + h.phase) * 0.08;
       ctx.fillStyle = 'rgba(240,120,220,0.65)';
