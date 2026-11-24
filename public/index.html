@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#04243d">
+  <meta name="description" content="Deep Bite: a 2D shark game. Eat, grow, survive the deep.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Deep Bite</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <canvas id="game" aria-label="Deep Bite game"></canvas>
+
+  <!-- HUD -->
+  <div id="hud" hidden>
+    <div class="hud-stats">
+      <div id="score" class="hud-score">0</div>
+      <div id="combo" class="hud-combo"></div>
+      <div id="level" class="hud-level">Lv 1</div>
+    </div>
+    <div class="hud-bars">
+      <div class="bar" id="bar-health" role="meter" aria-label="Health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span>HP</span></div>
+      <div class="bar" id="bar-hunger" role="meter" aria-label="Hunger" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span>Food</span></div>
+      <div class="bar" id="bar-stamina" role="meter" aria-label="Boost" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span>Boost</span></div>
+    </div>
+    <button id="pause-btn" class="icon-btn" data-action="pause" aria-label="Pause">II</button>
+  </div>
+  <button id="boost-btn" hidden aria-label="Boost">BOOST</button>
+
+  <!-- Screens -->
+  <section id="screen-menu" class="screen">
+    <h1>Deep Bite</h1>
+    <p class="tagline">Eat smaller fish. Grow. Survive the deep.</p>
+    <button class="btn primary" data-action="play">Play</button>
+    <button class="btn" data-action="leaderboard">Leaderboard</button>
+    <button class="btn" id="mute-btn" data-action="mute" aria-pressed="false">Sound: on</button>
+    <p class="best">Best: <span id="menu-best">0</span></p>
+    <div class="howto">
+      <p><b>Move:</b> touch &amp; drag, mouse, or WASD / arrows</p>
+      <p><b>Boost:</b> BOOST button, hold mouse, or Space</p>
+      <p>Red-outlined fish are too big, so grow first. Avoid jellyfish, mines and hooks.</p>
+    </div>
+  </section>
+
+  <section id="screen-pause" class="screen" hidden>
+    <h2>Paused</h2>
+    <button class="btn primary" data-action="resume">Resume</button>
+    <button class="btn" data-action="menu">Quit to menu</button>
+  </section>
+
+  <section id="screen-over" class="screen" hidden>
+    <h2>Game over</h2>
+    <div id="over-score" class="big-score">0</div>
+    <div id="over-best" class="muted"></div>
+    <div id="over-stats" class="muted"></div>
+    <form id="submit-form" autocomplete="off">
+      <input id="name-input" maxlength="16" placeholder="Your name" aria-label="Your name" required>
+      <button class="btn" type="submit">Submit score</button>
+    </form>
+    <div id="submit-msg" class="muted" aria-live="polite"></div>
+    <ol id="over-leaderboard" class="leaderboard"></ol>
+    <button class="btn primary" data-action="play">Play again</button>
+    <button class="btn" data-action="menu">Menu</button>
+  </section>
+
+  <section id="screen-board" class="screen" hidden>
+    <h2>Leaderboard</h2>
+    <ol id="board-list" class="leaderboard"></ol>
+    <button class="btn" data-action="menu">Back</button>
+  </section>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>
