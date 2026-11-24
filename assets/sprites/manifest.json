@@ -1,0 +1,113 @@
+{
+  "facing": "right",
+  "sprites": {
+    "shark": {
+      "svg": "svg/shark.svg",
+      "png": "png/shark.png",
+      "png2x": "png/shark@2x.png",
+      "width": 512,
+      "height": 256,
+      "anchor": [
+        0.62,
+        0.5
+      ],
+      "role": "player"
+    },
+    "shark_bite": {
+      "svg": "svg/shark_bite.svg",
+      "png": "png/shark_bite.png",
+      "png2x": "png/shark_bite@2x.png",
+      "width": 512,
+      "height": 256,
+      "anchor": [
+        0.62,
+        0.5
+      ],
+      "role": "player (bite frame)"
+    },
+    "sardine": {
+      "svg": "svg/sardine.svg",
+      "png": "png/sardine.png",
+      "png2x": "png/sardine@2x.png",
+      "width": 128,
+      "height": 64,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "role": "small prey"
+    },
+    "tuna": {
+      "svg": "svg/tuna.svg",
+      "png": "png/tuna.png",
+      "png2x": "png/tuna@2x.png",
+      "width": 256,
+      "height": 128,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "role": "large prey"
+    },
+    "jellyfish": {
+      "svg": "svg/jellyfish.svg",
+      "png": "png/jellyfish.png",
+      "png2x": "png/jellyfish@2x.png",
+      "width": 128,
+      "height": 256,
+      "anchor": [
+        0.5,
+        0.2
+      ],
+      "role": "hazard"
+    },
+    "turtle": {
+      "svg": "svg/turtle.svg",
+      "png": "png/turtle.png",
+      "png2x": "png/turtle@2x.png",
+      "width": 256,
+      "height": 128,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "role": "neutral / bonus"
+    },
+    "seal": {
+      "svg": "svg/seal.svg",
+      "png": "png/seal.png",
+      "png2x": "png/seal@2x.png",
+      "width": 256,
+      "height": 128,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "role": "large prey"
+    },
+    "background_ocean": {
+      "svg": "svg/background_ocean.svg",
+      "png": "png/background_ocean.png",
+      "png2x": "png/background_ocean@2x.png",
+      "width": 1920,
+      "height": 1080,
+      "anchor": [
+        0,
+        0
+      ],
+      "role": "background"
+    },
+    "seabed": {
+      "svg": "svg/seabed.svg",
+      "png": "png/seabed.png",
+      "png2x": "png/seabed@2x.png",
+      "width": 1920,
+      "height": 300,
+      "anchor": [
+        0,
+        1
+      ],
+      "role": "foreground tile (tiles horizontally)"
+    }
+  }
+}

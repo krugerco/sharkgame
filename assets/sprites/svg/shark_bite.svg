@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 256" width="512" height="256">
+  <defs>
+    <linearGradient id="sk-body" x1="0" y1="90" x2="0" y2="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3b4852"/>
+      <stop offset="0.45" stop-color="#5d6d79"/>
+      <stop offset="0.62" stop-color="#7d8c96"/>
+      <stop offset="1" stop-color="#8f9ca5"/>
+    </linearGradient>
+    <linearGradient id="sk-belly" x1="0" y1="135" x2="0" y2="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e9ecec"/>
+      <stop offset="1" stop-color="#c9cfd2"/>
+    </linearGradient>
+    <linearGradient id="sk-fin" x1="1" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#56656f"/>
+      <stop offset="0.7" stop-color="#3c4851"/>
+      <stop offset="1" stop-color="#262f35"/>
+    </linearGradient>
+    <linearGradient id="sk-pec" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#55636d"/>
+      <stop offset="0.75" stop-color="#3a4750"/>
+      <stop offset="1" stop-color="#15191c"/>
+    </linearGradient>
+    <radialGradient id="sk-sheen" cx="0.62" cy="0.18" r="0.6">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sk-under" x1="0" y1="140" x2="0" y2="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="sk-mouth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a1e24"/>
+      <stop offset="1" stop-color="#2a0c10"/>
+    </linearGradient>
+    <linearGradient id="sk-len" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0d1418" stop-opacity="0.35"/>
+      <stop offset="0.4" stop-color="#0d1418" stop-opacity="0"/>
+      <stop offset="0.9" stop-color="#0d1418" stop-opacity="0"/>
+      <stop offset="1" stop-color="#0d1418" stop-opacity="0.12"/>
+    </linearGradient>
+    <filter id="sk-blur" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+    <clipPath id="sk-clip"><path d="M 499 133
+    C 491 119, 470 105, 414 96
+    C 360 90, 300 90, 248 95
+    C 196 100, 148 110, 106 121
+    L 70 128 L 70 140
+    C 118 150, 178 162, 238 166
+    C 318 171, 392 166, 440 157
+    C 472 151, 490 143, 499 133 Z"/></clipPath>
+    
+  <filter id="sk-tex" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="3" seed="7" result="n"/>
+    <feColorMatrix in="n" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.22 0" result="a"/>
+    <feComposite in="a" in2="SourceGraphic" operator="in"/>
+  </filter>
+    
+  <filter id="sk-shadow" x="-20%" y="-20%" width="140%" height="160%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+    <feOffset dy="2" result="b"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.25"/></feComponentTransfer>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  </defs>
+
+  <g filter="url(#sk-shadow)">
+    <!-- far-side pectoral fin, darker and partly hidden -->
+    <path d="M 380 156 C 372 170, 360 184, 346 194 C 360 190, 378 178, 392 160 Z" fill="url(#sk-fin)" opacity="0.55"/>
+
+    <!-- tail (heterocercal crescent, upper lobe slightly longer) -->
+    <path d="M 84 124 C 64 100, 38 64, 12 34 C 20 70, 34 108, 48 134
+             C 36 156, 24 182, 18 206 C 42 186, 64 162, 84 144 Z" fill="url(#sk-fin)"/>
+    <path d="M 84 124 C 64 100, 38 64, 12 34 C 26 66, 44 100, 60 128 Z" fill="#000" opacity="0.12"/>
+
+    <!-- dorsal fin -->
+    <path d="M 316 95 C 300 68, 274 40, 246 20 C 252 48, 248 74, 234 98 Z" fill="url(#sk-fin)"/>
+    <path d="M 316 95 C 300 68, 274 40, 246 20 C 262 46, 278 72, 292 96 Z" fill="#fff" opacity="0.07"/>
+
+    <!-- second dorsal + anal fin + pelvic fin -->
+    <path d="M 132 115 C 128 107, 122 101, 114 97 C 116 104, 116 112, 118 118 Z" fill="url(#sk-fin)" />
+    <path d="M 126 146 C 122 154, 116 160, 108 164 C 114 157, 114 150, 112 144 Z" fill="url(#sk-fin)" />
+    <path d="M 206 163 C 194 172, 182 181, 166 188 C 182 186, 198 180, 216 166 Z" fill="url(#sk-fin)" />
+
+    <!-- lower jaw (rotates open for the bite frame) -->
+    <g transform="rotate(22 432 152)">
+      <path d="M 432 150 L 494 140 L 492 146 C 476 154, 452 158, 432 156 Z" fill="url(#sk-mouth)"/>
+      <path d="M 430 151 C 452 156, 476 153, 494 141 C 488 156, 466 166, 432 166 Z" fill="url(#sk-belly)"/>
+      <path d="M 437.8 155.5 L 440 150 L 442.2 155.5 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 444.2 154.2 L 446.4 148.7 L 448.59999999999997 154.2 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 450.6 152.9 L 452.8 147.4 L 455 152.9 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 457 151.6 L 459.2 146.1 L 461.4 151.6 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 463.40000000000003 150.3 L 465.6 144.8 L 467.8 150.3 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 469.8 149 L 472 143.5 L 474.2 149 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 476.2 146.29999999999998 L 478.4 140.79999999999998 L 480.59999999999997 146.29999999999998 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 482.6 143.6 L 484.8 138.1 L 487 143.6 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/>
+    </g>
+
+    <path d="M 430 150 C 452 154, 476 150, 494 138 L 494 146 C 474 160, 450 162, 430 158 Z" fill="url(#sk-mouth)"/>
+
+    <!-- body -->
+    <path d="M 499 133
+    C 491 119, 470 105, 414 96
+    C 360 90, 300 90, 248 95
+    C 196 100, 148 110, 106 121
+    L 70 128 L 70 140
+    C 118 150, 178 162, 238 166
+    C 318 171, 392 166, 440 157
+    C 472 151, 490 143, 499 133 Z" fill="url(#sk-body)"/>
+    <g clip-path="url(#sk-clip)">
+      <!-- countershading: irregular line between grey back and white belly -->
+      <path d="M 500 140 C 482 146, 464 141, 446 146 C 428 151, 414 140, 396 143
+               C 376 146, 362 139, 344 144 C 322 150, 304 142, 284 147
+               C 260 153, 236 146, 212 151 C 186 156, 160 146, 134 147
+               C 110 148, 88 140, 66 140 L 66 200 L 500 200 Z" fill="url(#sk-belly)"/>
+      <path d="M 499 133
+    C 491 119, 470 105, 414 96
+    C 360 90, 300 90, 248 95
+    C 196 100, 148 110, 106 121
+    L 70 128 L 70 140
+    C 118 150, 178 162, 238 166
+    C 318 171, 392 166, 440 157
+    C 472 151, 490 143, 499 133 Z" fill="url(#sk-under)"/>
+      <!-- shadow band where the flank turns under, gives a rounded body -->
+      <path d="M 500 138 C 470 140, 430 136, 380 138 C 300 141, 200 144, 66 137" stroke="#1d262c" stroke-width="10" fill="none" opacity="0.18" filter="url(#sk-blur)"/>
+      <!-- light band along the upper back -->
+      <path d="M 470 108 C 420 100, 340 97, 250 101 C 190 104, 140 113, 90 124" stroke="#c9d4da" stroke-width="9" fill="none" opacity="0.18" filter="url(#sk-blur)"/>
+      <!-- tail end falls into shadow -->
+      <rect x="60" y="80" width="450" height="100" fill="url(#sk-len)"/>
+      <path d="M 499 133
+    C 491 119, 470 105, 414 96
+    C 360 90, 300 90, 248 95
+    C 196 100, 148 110, 106 121
+    L 70 128 L 70 140
+    C 118 150, 178 162, 238 166
+    C 318 171, 392 166, 440 157
+    C 472 151, 490 143, 499 133 Z" fill="url(#sk-sheen)"/>
+      <rect x="60" y="80" width="450" height="100" filter="url(#sk-tex)"/>
+      <!-- lateral keel on the caudal peduncle -->
+      <path d="M 70 134 C 90 132, 110 131, 130 132" stroke="#2c363d" stroke-width="2" fill="none" opacity="0.5"/>
+    </g>
+
+    <!-- gill slits -->
+    <g stroke="#2a333a" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.75">
+      <path d="M 420 112 C 416 124, 416 136, 420 148"/>
+      <path d="M 410 111 C 406 124, 406 137, 410 150"/>
+      <path d="M 400 110 C 396 124, 396 138, 400 152"/>
+      <path d="M 390 110 C 386 124, 386 139, 390 153"/>
+      <path d="M 380 110 C 376 124, 376 139, 380 153"/>
+    </g>
+
+    <path d="M 433.2 150.5 L 436 155.6 L 438.8 150.5 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 439.8 149.5 L 442.6 154.95 L 445.40000000000003 149.5 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 446.4 148.5 L 449.2 154.3 L 452 148.5 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 453 147.5 L 455.8 153.65 L 458.6 147.5 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 459.59999999999997 146.5 L 462.4 153 L 465.2 146.5 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 466.2 145.5 L 469 151.65 L 471.8 145.5 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 472.8 144.5 L 475.6 150.3 L 478.40000000000003 144.5 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 479.4 141.9 L 482.2 147.35 L 485 141.9 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/><path d="M 486 139.3 L 488.8 144.4 L 491.6 139.3 Z" fill="#f3efe4" stroke="#b9b2a1" stroke-width="0.4"/>
+
+    <!-- mouth line -->
+    <path d="M 492 140 C 476 150, 452 154, 430 150" stroke="#1e2428" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0"/>
+    <!-- nostril -->
+    <path d="M 486 126 C 482 126, 479 128, 478 130" stroke="#1e2428" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <!-- ampullae (sensory pores) -->
+    <g fill="#1e2428" opacity="0.35">
+      <circle cx="478" cy="120" r="0.9"/><circle cx="472" cy="117" r="0.9"/>
+      <circle cx="484" cy="134" r="0.9"/><circle cx="476" cy="136" r="0.9"/>
+      <circle cx="468" cy="133" r="0.9"/><circle cx="490" cy="129" r="0.9"/>
+    </g>
+    <!-- eye: flat black, small highlight -->
+    <ellipse cx="458" cy="121" rx="5.2" ry="4.8" fill="#0b0d0f"/>
+    <ellipse cx="458" cy="121" rx="6.6" ry="6" fill="none" stroke="#2a3238" stroke-width="1.2" opacity="0.7"/>
+    <circle cx="459.8" cy="119.3" r="1.3" fill="#fff" opacity="0.8"/>
+
+    <!-- near-side pectoral fin: long, swept back, black tip -->
+    <path d="M 372 150 C 352 174, 324 202, 290 226 C 318 220, 348 196, 386 158 Z" fill="url(#sk-pec)"/>
+    <path d="M 372 150 C 352 174, 324 202, 290 226 C 312 206, 340 180, 362 154 Z" fill="#fff" opacity="0.08"/>
+  </g>
+</svg>
