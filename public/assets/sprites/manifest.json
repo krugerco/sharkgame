@@ -49,17 +49,17 @@
       ],
       "role": "large prey"
     },
-    "jellyfish": {
-      "svg": "svg/jellyfish.svg",
-      "png": "png/jellyfish.png",
-      "png2x": "png/jellyfish@2x.png",
-      "width": 128,
-      "height": 256,
+    "seal": {
+      "svg": "svg/seal.svg",
+      "png": "png/seal.png",
+      "png2x": "png/seal@2x.png",
+      "width": 256,
+      "height": 128,
       "anchor": [
         0.5,
-        0.2
+        0.5
       ],
-      "role": "hazard"
+      "role": "large prey"
     },
     "turtle": {
       "svg": "svg/turtle.svg",
@@ -73,17 +73,137 @@
       ],
       "role": "neutral / bonus"
     },
-    "seal": {
-      "svg": "svg/seal.svg",
-      "png": "png/seal.png",
-      "png2x": "png/seal@2x.png",
+    "jellyfish": {
+      "svg": "svg/jellyfish.svg",
+      "png": "png/jellyfish.png",
+      "png2x": "png/jellyfish@2x.png",
+      "width": 128,
+      "height": 256,
+      "anchor": [
+        0.5,
+        0.2
+      ],
+      "role": "hazard"
+    },
+    "minnow": {
+      "svg": "svg/minnow.svg",
+      "png": "png/minnow.png",
+      "png2x": "png/minnow@2x.png",
       "width": 256,
       "height": 128,
       "anchor": [
         0.5,
         0.5
       ],
+      "role": "small prey"
+    },
+    "reef": {
+      "svg": "svg/reef.svg",
+      "png": "png/reef.png",
+      "png2x": "png/reef@2x.png",
+      "width": 256,
+      "height": 128,
+      "anchor": [
+        0.566,
+        0.5
+      ],
+      "role": "small prey (butterflyfish)"
+    },
+    "mackerel": {
+      "svg": "svg/mackerel.svg",
+      "png": "png/mackerel.png",
+      "png2x": "png/mackerel@2x.png",
+      "width": 256,
+      "height": 128,
+      "anchor": [
+        0.496,
+        0.5
+      ],
+      "role": "prey"
+    },
+    "snapper": {
+      "svg": "svg/snapper.svg",
+      "png": "png/snapper.png",
+      "png2x": "png/snapper@2x.png",
+      "width": 256,
+      "height": 128,
+      "anchor": [
+        0.5,
+        0.516
+      ],
+      "role": "prey"
+    },
+    "grouper": {
+      "svg": "svg/grouper.svg",
+      "png": "png/grouper.png",
+      "png2x": "png/grouper@2x.png",
+      "width": 256,
+      "height": 128,
+      "anchor": [
+        0.492,
+        0.547
+      ],
       "role": "large prey"
+    },
+    "swordfish": {
+      "svg": "svg/swordfish.svg",
+      "png": "png/swordfish.png",
+      "png2x": "png/swordfish@2x.png",
+      "width": 384,
+      "height": 128,
+      "anchor": [
+        0.414,
+        0.5
+      ],
+      "role": "large prey (bill extends past body)"
+    },
+    "squid": {
+      "svg": "svg/squid.svg",
+      "png": "png/squid.png",
+      "png2x": "png/squid@2x.png",
+      "width": 256,
+      "height": 128,
+      "anchor": [
+        0.508,
+        0.5
+      ],
+      "role": "large prey (giant squid)"
+    },
+    "golden": {
+      "svg": "svg/golden.svg",
+      "png": "png/golden.png",
+      "png2x": "png/golden@2x.png",
+      "width": 256,
+      "height": 128,
+      "anchor": [
+        0.492,
+        0.508
+      ],
+      "role": "bonus fish (glow built in)"
+    },
+    "mine": {
+      "svg": "svg/mine.svg",
+      "png": "png/mine.png",
+      "png2x": "png/mine@2x.png",
+      "width": 128,
+      "height": 128,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "role": "hazard (spikes reach 0.45 of width)"
+    },
+    "hook": {
+      "svg": "svg/hook.svg",
+      "png": "png/hook.png",
+      "png2x": "png/hook@2x.png",
+      "width": 64,
+      "height": 128,
+      "anchor": [
+        0.5,
+        0.39
+      ],
+      "role": "hazard (eye at top centre)"
     },
     "background_ocean": {
       "svg": "svg/background_ocean.svg",
@@ -95,7 +215,19 @@
         0,
         0
       ],
-      "role": "background"
+      "role": "background (tiles horizontally)"
+    },
+    "rock_spires": {
+      "svg": "svg/rock_spires.svg",
+      "png": "png/rock_spires.png",
+      "png2x": "png/rock_spires@2x.png",
+      "width": 1920,
+      "height": 1080,
+      "anchor": [
+        0,
+        1
+      ],
+      "role": "distant rock layer (tiles horizontally)"
     },
     "seabed": {
       "svg": "svg/seabed.svg",

@@ -16,18 +16,25 @@ import { hash, clamp } from './util.js';
 // (e.g. shark body ellipse is 400px of a 512px-wide sprite → 512 / (400/4) ≈ 5.1).
 // filter = optional canvas filter (used to tint reused art).
 const SPRITE_MAP = {
-  'shark':        { name: 'shark',      size: 5.1 },
-  'shark.bite':   { name: 'shark_bite', size: 5.1 },
-  'fish.minnow':  { name: 'sardine',    size: 2.56, filter: 'brightness(1.25) saturate(0.6)' },
-  'fish.sardine': { name: 'sardine',    size: 2.56 },
-  'fish.mackerel':{ name: 'sardine',    size: 2.56, filter: 'hue-rotate(-25deg) saturate(1.6)' },
-  'fish.tuna':    { name: 'tuna',       size: 2.56 },
-  'fish.turtle':  { name: 'turtle',     size: 2.84 },
-  'fish.seal':    { name: 'seal',       size: 2.44 },
-  'fish.bluefin': { name: 'tuna',       size: 2.56, filter: 'brightness(0.85) saturate(1.3)' },
-  'fish.bigseal': { name: 'seal',       size: 2.44, filter: 'brightness(0.8)' },
-  'fish.golden':  { name: 'sardine',    size: 2.56, filter: 'sepia(1) saturate(5) brightness(1.15)', glow: '#ffd23f' },
-  'hazard.jelly': { name: 'jellyfish',  size: 2.37 },
+  'shark':          { name: 'shark',      size: 5.1 },
+  'shark.bite':     { name: 'shark_bite', size: 5.1 },
+  'fish.minnow':    { name: 'minnow',     size: 2.54 },
+  'fish.reef':      { name: 'reef',       size: 3.21 },
+  'fish.sardine':   { name: 'sardine',    size: 2.56 },
+  'fish.mackerel':  { name: 'mackerel',   size: 2.52 },
+  'fish.snapper':   { name: 'snapper',    size: 2.59 },
+  'fish.tuna':      { name: 'tuna',       size: 2.56 },
+  'fish.turtle':    { name: 'turtle',     size: 2.84 },
+  'fish.seal':      { name: 'seal',       size: 2.44 },
+  'fish.grouper':   { name: 'grouper',    size: 2.5 },
+  'fish.bluefin':   { name: 'tuna',       size: 2.56, filter: 'brightness(0.85) saturate(1.3)' },
+  'fish.swordfish': { name: 'swordfish',  size: 3.24 },
+  'fish.squid':     { name: 'squid',      size: 2.5 },
+  'fish.bigseal':   { name: 'seal',       size: 2.44, filter: 'brightness(0.8)' },
+  'fish.golden':    { name: 'golden',     size: 2.54 }, // glow is part of the art
+  'hazard.jelly':   { name: 'jellyfish',  size: 2.37 },
+  'hazard.mine':    { name: 'mine',       size: 2.2 },
+  'hazard.hook':    { name: 'hook',       size: 1.52 },
 };
 
 const sprites = {}; // designer sprite name -> { img, width, height, anchor }
@@ -106,8 +113,16 @@ export function drawBackground(ctx, cam, t) {
     ctx.fillRect(left, vTop, w, vh);
   }
 
+  // designer distant rock spires: parallax layer resting on the seabed
+  const spires = sprites.rock_spires;
+  if (spires && top + h > WORLD.depth - spires.height) {
+    const p = 0.5, tw = spires.width, y = WORLD.depth + 160 - spires.height;
+    const off = cx * p;
+    for (let x = Math.floor((left - off) / tw) * tw + off; x < left + w; x += tw) ctx.drawImage(spires.img, x, y, tw + 1, spires.height);
+  }
+
   // placeholder: distant rocks (parallax 0.5)
-  if (!ocean) {
+  if (!ocean && !spires) {
     ctx.fillStyle = PLACEHOLDER.rock;
     const p = 0.5, step = 300;
     const off = cx * p;
@@ -240,7 +255,8 @@ function placeholderShark(ctx, s, t) {
 // ── Fish ─────────────────────────────────────────────────────────────────────
 
 const FISH_COLORS = {
-  minnow: '#c9e4f5', sardine: '#9fc7e0', mackerel: '#4f8fae', tuna: '#2f4f75',
+  minnow: '#c9e4f5', reef: '#f39b3a', sardine: '#9fc7e0', mackerel: '#4f8fae', snapper: '#d9534f', tuna: '#2f4f75',
+  grouper: '#7a6a4f', swordfish: '#36628a', squid: '#a65fb5',
   turtle: '#6b7f3a', seal: '#8a8578', bluefin: '#24406a', bigseal: '#6e6a60',
 };
 

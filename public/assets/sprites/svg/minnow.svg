@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 128" width="256" height="128">
+  <defs>
+    <linearGradient id="mn-b" x1="0" y1="46" x2="0" y2="82" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4f6447"/>
+      <stop offset="0.4" stop-color="#8fa38c"/>
+      <stop offset="0.58" stop-color="#dfe7e3"/>
+      <stop offset="1" stop-color="#f2f5f2"/>
+    </linearGradient>
+    <linearGradient id="mn-f" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9fb1a2" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#c9d6cc" stop-opacity="0.65"/>
+    </linearGradient>
+    <radialGradient id="mn-sh" cx="0.62" cy="0.22" r="0.6">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mn-u" x1="0" y1="46" x2="0" y2="82" gradientUnits="userSpaceOnUse">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.22"/>
+    </linearGradient>
+    <clipPath id="mn-c"><path d="M 248 63 C 240 52, 208 46, 160 46 C 112 46, 74 54, 46 60 L 46 68 C 74 74, 112 82, 160 82 C 208 82, 240 74, 248 65 Z"/></clipPath>
+    
+  <filter id="mn-t" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="3" seed="7" result="n"/>
+    <feColorMatrix in="n" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.17 0" result="a"/>
+    <feComposite in="a" in2="SourceGraphic" operator="in"/>
+  </filter>
+    
+  </defs>
+  
+  <path d="M 50 63 C 39.5 52.6, 24.8 37.400000000000006, 8 26
+   C 17.240000000000002 45, 18.5 58.3, 18.5 64
+   C 18.5 69.7, 17.240000000000002 83, 8 102
+   C 24.8 90.6, 39.5 75.4, 50 65 Z" fill="url(#mn-f)"/>
+      <path d="M 150 47 C 144 36, 136 30, 126 28 C 128 36, 128 42, 126 48 Z" fill="url(#mn-f)"/>
+      <path d="M 112 79 C 108 88, 100 94, 92 96 C 96 90, 96 84, 94 78 Z" fill="url(#mn-f)"/>
+  <path d="M 248 63 C 240 52, 208 46, 160 46 C 112 46, 74 54, 46 60 L 46 68 C 74 74, 112 82, 160 82 C 208 82, 240 74, 248 65 Z" fill="url(#mn-b)"/>
+  <g clip-path="url(#mn-c)">
+    <path d="M 52 64 C 110 62, 170 60, 236 60" stroke="#e8f1f6" stroke-width="7" opacity="0.75"/>
+      <path d="M 52 61 C 110 59, 170 57, 230 56" stroke="#2f4033" stroke-width="1.2" opacity="0.5"/>
+    <path d="M 248 63 C 240 52, 208 46, 160 46 C 112 46, 74 54, 46 60 L 46 68 C 74 74, 112 82, 160 82 C 208 82, 240 74, 248 65 Z" fill="url(#mn-u)"/>
+    <path d="M 248 63 C 240 52, 208 46, 160 46 C 112 46, 74 54, 46 60 L 46 68 C 74 74, 112 82, 160 82 C 208 82, 240 74, 248 65 Z" fill="url(#mn-sh)"/>
+    <rect width="256" height="128" filter="url(#mn-t)"/>
+    <path d="M 248 63 C 240 52, 208 46, 160 46 C 112 46, 74 54, 46 60 L 46 68 C 74 74, 112 82, 160 82 C 208 82, 240 74, 248 65 Z" fill="none" stroke="#000" stroke-opacity="0.18" stroke-width="2.5"/>
+  </g>
+  <path d="M 204 50 C 196 58, 196 72, 204 80" stroke="#000" stroke-opacity="0.32" stroke-width="1.6" fill="none"/>
+  <path d="M 247 64 C 236 68, 222 70, 210 68" stroke="#000" stroke-opacity="0.55" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+  <circle cx="226" cy="59" r="7" fill="#c9d2d6"/>
+  <circle cx="226" cy="59" r="7" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="0.8"/>
+  <circle cx="226.56" cy="59" r="4.2" fill="#07090b"/>
+  <circle cx="228.1" cy="56.9" r="1.4000000000000001" fill="#fff" opacity="0.85"/>
+  <path d="M 196 72 C 186 76, 176 80, 166 84 C 176 84, 188 80, 198 75 Z" fill="url(#mn-f)"/>
+</svg>

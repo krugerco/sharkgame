@@ -36,11 +36,16 @@ export const STATS = {
 export const FISH_TYPES = [
   { id: 'minnow',    r: 7,  speed: 95,  pts: 10,  school: [5, 9], depth: [0.0, 0.5] },
   { id: 'sardine',   r: 10, speed: 115, pts: 20,  school: [4, 7], depth: [0.05, 0.6] },
+  { id: 'reef',      r: 12, speed: 85,  pts: 30,  school: [1, 3], depth: [0.35, 0.97] },
   { id: 'mackerel',  r: 15, speed: 130, pts: 45,  school: [3, 5], depth: [0.1, 0.7] },
+  { id: 'snapper',   r: 20, speed: 100, pts: 80,  school: [1, 2], depth: [0.4, 0.95] },
   { id: 'tuna',      r: 24, speed: 150, pts: 120, school: [2, 4], depth: [0.1, 0.7] },
   { id: 'turtle',    r: 30, speed: 60,  pts: 200, school: [1, 1], depth: [0.1, 0.6], heal: 20 },
   { id: 'seal',      r: 38, speed: 140, pts: 350, school: [1, 2], depth: [0.0, 0.4] },
+  { id: 'grouper',   r: 44, speed: 70,  pts: 450, school: [1, 1], depth: [0.6, 0.97] },
   { id: 'bluefin',   r: 50, speed: 165, pts: 600, school: [1, 2], depth: [0.2, 0.8] },
+  { id: 'swordfish', r: 54, speed: 175, pts: 800, school: [1, 1], depth: [0.2, 0.7] },
+  { id: 'squid',     r: 60, speed: 90,  pts: 1100, school: [1, 1], depth: [0.7, 0.97] },
   { id: 'bigseal',   r: 62, speed: 120, pts: 1000, school: [1, 1], depth: [0.0, 0.5] },
 ];
 

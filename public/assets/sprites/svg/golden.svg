@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 128" width="256" height="128">
+  <defs>
+    <linearGradient id="gd-b" x1="0" y1="20" x2="0" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a86e0a"/>
+      <stop offset="0.35" stop-color="#f0c23a"/>
+      <stop offset="0.6" stop-color="#fff2ae"/>
+      <stop offset="1" stop-color="#f2cf5a"/>
+    </linearGradient>
+    <linearGradient id="gd-f" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6cf4a" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#c88a12" stop-opacity="1"/>
+    </linearGradient>
+    <radialGradient id="gd-sh" cx="0.62" cy="0.22" r="0.6">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gd-u" x1="0" y1="20" x2="0" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.22"/>
+    </linearGradient>
+    <clipPath id="gd-c"><path d="M 246 66 C 240 50, 220 30, 186 24 C 150 18, 106 30, 76 48 L 52 60 L 52 70 L 76 82 C 106 100, 150 110, 186 104 C 220 98, 240 82, 246 66 Z"/></clipPath>
+    
+  <filter id="gd-t" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="3" seed="7" result="n"/>
+    <feColorMatrix in="n" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.17 0" result="a"/>
+    <feComposite in="a" in2="SourceGraphic" operator="in"/>
+  </filter>
+    <filter id="gd-glow" x="-30%" y="-40%" width="160%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>
+  </defs>
+  <path d="M 246 66 C 240 50, 220 30, 186 24 C 150 18, 106 30, 76 48 L 52 60 L 52 70 L 76 82 C 106 100, 150 110, 186 104 C 220 98, 240 82, 246 66 Z" fill="#ffd23f" opacity="0.75" filter="url(#gd-glow)"/>
+  <path d="M 56 64 C 43.5 50, 26 30, 6 15
+   C 17 40, 18.5 57.5, 18.5 65
+   C 18.5 72.5, 17 90, 6 115
+   C 26 100, 43.5 80, 56 66 Z" fill="url(#gd-f)"/>
+      <path d="M 170 22 C 150 6, 120 4, 96 14 C 116 18, 134 24, 150 30 Z" fill="url(#gd-f)"/>
+      <path d="M 168 104 C 148 120, 122 122, 100 112 C 120 108, 136 104, 150 100 Z" fill="url(#gd-f)"/>
+  <path d="M 246 66 C 240 50, 220 30, 186 24 C 150 18, 106 30, 76 48 L 52 60 L 52 70 L 76 82 C 106 100, 150 110, 186 104 C 220 98, 240 82, 246 66 Z" fill="url(#gd-b)"/>
+  <g clip-path="url(#gd-c)">
+    <path d="M 56 62 l 4 3 l -4 3 Z" fill="#8a5a08" opacity="0.6"/><path d="M 63 62 l 4 3 l -4 3 Z" fill="#8a5a08" opacity="0.6"/><path d="M 70 62 l 4 3 l -4 3 Z" fill="#8a5a08" opacity="0.6"/><path d="M 77 62 l 4 3 l -4 3 Z" fill="#8a5a08" opacity="0.6"/><path d="M 84 62 l 4 3 l -4 3 Z" fill="#8a5a08" opacity="0.6"/><path d="M 91 62 l 4 3 l -4 3 Z" fill="#8a5a08" opacity="0.6"/><path d="M 98 62 l 4 3 l -4 3 Z" fill="#8a5a08" opacity="0.6"/><path d="M 105 62 l 4 3 l -4 3 Z" fill="#8a5a08" opacity="0.6"/><path d="M 112 62 l 4 3 l -4 3 Z" fill="#8a5a08" opacity="0.6"/>
+      <path d="M 70 66 C 110 60, 150 46, 200 40" stroke="#fffbe0" stroke-width="7" opacity="0.4" fill="none"/>
+      <g stroke="#7c4e06" stroke-width="2" opacity="0.25"><line x1="100" y1="20" x2="96" y2="108"/><line x1="118" y1="20" x2="114" y2="108"/><line x1="136" y1="20" x2="132" y2="108"/><line x1="154" y1="20" x2="150" y2="108"/><line x1="172" y1="20" x2="168" y2="108"/><line x1="190" y1="20" x2="186" y2="108"/><line x1="208" y1="20" x2="204" y2="108"/></g>
+    <path d="M 246 66 C 240 50, 220 30, 186 24 C 150 18, 106 30, 76 48 L 52 60 L 52 70 L 76 82 C 106 100, 150 110, 186 104 C 220 98, 240 82, 246 66 Z" fill="url(#gd-u)"/>
+    <path d="M 246 66 C 240 50, 220 30, 186 24 C 150 18, 106 30, 76 48 L 52 60 L 52 70 L 76 82 C 106 100, 150 110, 186 104 C 220 98, 240 82, 246 66 Z" fill="url(#gd-sh)"/>
+    <rect width="256" height="128" filter="url(#gd-t)"/>
+    <path d="M 246 66 C 240 50, 220 30, 186 24 C 150 18, 106 30, 76 48 L 52 60 L 52 70 L 76 82 C 106 100, 150 110, 186 104 C 220 98, 240 82, 246 66 Z" fill="none" stroke="#000" stroke-opacity="0.18" stroke-width="2.5"/>
+  </g>
+  <path d="M 206 36 C 194 56, 194 82, 206 96" stroke="#000" stroke-opacity="0.32" stroke-width="1.6" fill="none"/>
+  <path d="M 246 67 C 240 72, 232 74, 224 72" stroke="#000" stroke-opacity="0.55" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+  <circle cx="224" cy="56" r="7" fill="#e8d27a"/>
+  <circle cx="224" cy="56" r="7" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="0.8"/>
+  <circle cx="224.56" cy="56" r="4.2" fill="#07090b"/>
+  <circle cx="226.1" cy="53.9" r="1.4000000000000001" fill="#fff" opacity="0.85"/>
+  <path d="M 196 70 C 180 70, 160 74, 142 82 C 162 84, 182 80, 200 74 Z" fill="#f8d870"/>
+</svg>
